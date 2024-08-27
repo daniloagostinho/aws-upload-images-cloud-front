@@ -26,10 +26,10 @@ export class HomeComponent {
   constructor() {
     // Inicialize o cliente S3 usando o SDK v3
     this.s3Client = new S3Client({
-      region: '',
+      region: 'sa-east-1',
       credentials: {
-        accessKeyId: '',  // Substitua pela sua Access Key
-        secretAccessKey: '',  // Substitua pela sua Secret Key
+        accessKeyId: 'AKIAYCO62F54H5FXS3MR',  // Substitua pela sua Access Key
+        secretAccessKey: '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',  // Substitua pela sua Secret Key,
       },
     });
   }
@@ -41,7 +41,7 @@ export class HomeComponent {
   async onUpload() {
     if (this.selectedFile) {
       const params = {
-        Bucket: '',  // Substitua pelo nome do bucket
+        Bucket: 'minha-aplicacao-upload-imagens',  // Substitua pelo nome do bucket
         Key: this.selectedFile.name,
         Body: this.selectedFile,
         ContentType: this.selectedFile.type,

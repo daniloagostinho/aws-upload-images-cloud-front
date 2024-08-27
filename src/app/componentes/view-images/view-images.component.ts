@@ -28,6 +28,7 @@ import { S3Client, ListObjectsCommand, GetObjectCommand } from '@aws-sdk/client-
 
   `,
   styleUrl: './view-images.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewImagesComponent {
   bucketName = 'minha-aplicacao-upload-imagens';  // Nome do seu bucket
@@ -38,10 +39,10 @@ export class ViewImagesComponent {
   constructor(private cdr: ChangeDetectorRef) {
     // Configuração do cliente S3
     this.s3Client = new S3Client({
-      region: '',  // Ex: 'sa-east-1'
+      region: 'sa-east-1',  // Ex: 'sa-east-1'
       credentials: {
-        accessKeyId: '',
-        secretAccessKey: '',
+        accessKeyId: 'AKIAYCO62F54H5FXS3MR',
+        secretAccessKey: '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'
       }
     });
   }
