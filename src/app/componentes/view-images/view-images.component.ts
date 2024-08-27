@@ -10,31 +10,51 @@ import { S3Client, ListObjectsCommand, GetObjectCommand } from '@aws-sdk/client-
     NgIf
   ],
   template: `
-<div>
-  <h2>Imagens no Bucket S3</h2>
-  <div *ngIf="imagens.length > 0">
-    <ul>
-      <li *ngFor="let imagem of imagens">
-        <a [href]="imagem.url" target="_blank">{{ imagem.key }}</a>
-        <img [src]="imagem.url" alt="Imagem" style="width: 200px; height: auto;"/>
-      </li>
-    </ul>
+<div class="max-w-7xl mx-auto py-8 px-4">
+  <h1 class="text-3xl font-bold text-center mb-8">Galeria de Imagens</h1>
+
+  <div *ngIf="imagens.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  <div *ngFor="let imagem of imagens" class="group relative">
+    <!-- Imagem -->
+    <img [src]="imagem.url" alt="{{ imagem.key }}" class="w-full h-64 object-cover rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform group-hover:scale-105" />
+
+    <!-- Link de Visualização sobre a Imagem -->
+    <a (click)="openModal(imagem.url)"
+       class="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100">
+      <span class="bg-black bg-opacity-60 text-white text-lg font-semibold px-4 py-2 rounded-lg cursor-pointer">
+        Visualizar
+      </span>
+    </a>
   </div>
-  <div *ngIf="imagens.length === 0">
-    <p>Nenhuma imagem encontrada no bucket.</p>
+</div>
+
+
+  <div *ngIf="imagens.length === 0" class="text-center text-gray-600">
+    Nenhuma imagem encontrada.
+  </div>
+
+  <!-- Modal de visualização de imagem -->
+  <div *ngIf="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+    <div class="relative">
+      <img [src]="selectedImageUrl" alt="Imagem em tela cheia" class="max-w-full max-h-screen object-contain rounded-lg shadow-lg" />
+      <button (click)="closeModal()" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
+    </div>
   </div>
 </div>
 
 
   `,
   styleUrl: './view-images.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewImagesComponent {
   bucketName = 'minha-aplicacao-upload-imagens';  // Nome do seu bucket
   s3Client: S3Client;
 
   imagens: { key: string, url: string }[] = [];
+
+  isModalOpen: boolean = false;
+  selectedImageUrl: string | null = null;
 
   constructor(private cdr: ChangeDetectorRef) {
     // Configuração do cliente S3
@@ -69,5 +89,15 @@ export class ViewImagesComponent {
       console.error('Erro ao listar objetos no S3:', error);
     }
   }
-  
+
+  openModal(url: string) {
+    this.selectedImageUrl = url;
+    this.isModalOpen = true;
+  }
+
+  // Fecha o modal
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedImageUrl = null;
+  }
 }

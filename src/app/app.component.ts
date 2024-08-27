@@ -1,6 +1,7 @@
+import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-
+import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,5 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  
+ 
 }

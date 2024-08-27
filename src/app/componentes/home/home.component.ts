@@ -1,30 +1,43 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { S3Client, PutObjectCommand, ObjectCannedACL } from '@aws-sdk/client-s3';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
+    RouterOutlet,
+    RouterModule,
+    NgIf,
+    NgFor
   ],
   template: `
-    <div>
-  <h2>Upload de Imagem Privada para S3</h2>
-  <input type="file" (change)="onFileSelected($event)" />
-  <button (click)="onUpload()">Upload</button>
-</div>
+    <section class="max-w-7xl mx-auto py-8">
+      <h2 class="text-2xl font-bold text-center mb-6">Últimas Imagens Enviadas</h2>
+      
+      <div *ngIf="imagensRecentes.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div *ngFor="let imagem of imagensRecentes" class="relative">
+          <img [src]="imagem.url" alt="{{ imagem.key }}" class="w-full h-64 object-cover rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer" />
+        </div>
+      </div>
 
+      <div *ngIf="imagensRecentes.length === 0" class="text-center text-gray-600">
+        Nenhuma imagem recente encontrada.
+      </div>
+    </section>
   `,
   styleUrl: './home.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  selectedFile: File | null = null;
+  imagensRecentes: { key: string, url: string }[] = [];
+  bucketName = 'minha-aplicacao-upload-imagens';  // Substitua pelo nome do seu bucket
   s3Client: S3Client;
 
   constructor() {
-    // Inicialize o cliente S3 usando o SDK v3
+    // Configuração do cliente S3
     this.s3Client = new S3Client({
       region: 'sa-east-1',
       credentials: {
@@ -34,31 +47,30 @@ export class HomeComponent {
     });
   }
 
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
-  }
+  async ngOnInit() {
+    try {
+      const listCommand = new ListObjectsCommand({
+        Bucket: this.bucketName,
+        MaxKeys: 5,  // Limitar para as 5 últimas imagens
+        Delimiter: '/',  // Pegar apenas objetos de nível superior
+      });
 
-  async onUpload() {
-    if (this.selectedFile) {
-      const params = {
-        Bucket: 'minha-aplicacao-upload-imagens',  // Substitua pelo nome do bucket
-        Key: this.selectedFile.name,
-        Body: this.selectedFile,
-        ContentType: this.selectedFile.type,
-        // ACL: 'public-read' as ObjectCannedACL,  // Altere conforme necessário (público ou privado)
-      };
+      const response = await this.s3Client.send(listCommand);
 
-      try {
-        const command = new PutObjectCommand(params);
-        const data = await this.s3Client.send(command);
-        console.log('Upload bem-sucedido', data);
-        alert('Upload bem-sucedido!');
-      } catch (err) {
-        console.error('Erro ao fazer upload', err);
-        alert('Erro ao fazer upload');
+      // Ordenar as imagens pela data de envio, da mais recente para a mais antiga
+      if (response.Contents) {
+        const sortedImages = response.Contents.sort((a, b) => 
+          (new Date(b.LastModified || '').getTime()) - (new Date(a.LastModified || '').getTime())
+        ).slice(0, 5);
+
+        // Mapear as imagens e gerar as URLs
+        this.imagensRecentes = sortedImages.map(item => ({
+          key: item.Key || '',
+          url: `https://${this.bucketName}.s3.sa-east-1.amazonaws.com/${item.Key}`
+        }));
       }
-    } else {
-      alert('Selecione um arquivo primeiro!');
+    } catch (error) {
+      console.error('Erro ao carregar as últimas imagens', error);
     }
   }
 }
