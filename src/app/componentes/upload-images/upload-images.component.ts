@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { S3Client, PutObjectCommand, ObjectCannedACL } from '@aws-sdk/client-s3';
+import {Component } from '@angular/core';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
 
 @Component({
@@ -20,7 +20,6 @@ import { S3Client, PutObjectCommand, ObjectCannedACL } from '@aws-sdk/client-s3'
       <button type="submit" class="upload-button">Fazer Upload</button>
     </form>
 
-    <!-- Mostrar o status do upload -->
     <div *ngIf="isLoading" class="upload-status loading">
       <p>Carregando...</p>
     </div>
@@ -45,12 +44,11 @@ export class UploadImagesComponent {
   uploadSuccess: boolean = false;
 
   constructor() {
-    // Inicialize o cliente S3 usando o SDK v3
     this.s3Client = new S3Client({
       region: 'sa-east-1',
       credentials: {
-        accessKeyId: 'AKIAYCO62F54H5FXS3MR',  // Substitua pela sua Access Key
-        secretAccessKey: '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',  // Substitua pela sua Secret Key,
+        accessKeyId: 'AKIAYCO62F54H5FXS3MR',
+        secretAccessKey: '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',
       },
     });
   }
@@ -76,7 +74,6 @@ export class UploadImagesComponent {
           Key: this.selectedFile.name,
           Body: this.selectedFile,
           ContentType: this.selectedFile.type,
-          // ACL: 'public-read'
         };
 
         const command = new PutObjectCommand(params);

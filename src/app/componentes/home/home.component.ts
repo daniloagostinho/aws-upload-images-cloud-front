@@ -34,16 +34,15 @@ import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 })
 export class HomeComponent {
   imagensRecentes: { key: string, url: string }[] = [];
-  bucketName = 'minha-aplicacao-upload-imagens';  // Substitua pelo nome do seu bucket
+  bucketName = 'minha-aplicacao-upload-imagens';
   s3Client: S3Client;
 
   constructor() {
-    // Configuração do cliente S3
     this.s3Client = new S3Client({
       region: 'sa-east-1',
       credentials: {
-        accessKeyId: 'AKIAYCO62F54H5FXS3MR',  // Substitua pela sua Access Key
-        secretAccessKey: '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',  // Substitua pela sua Secret Key,
+        accessKeyId: 'AKIAYCO62F54H5FXS3MR',
+        secretAccessKey: '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',
       },
     });
   }
@@ -52,20 +51,13 @@ export class HomeComponent {
     try {
       const listCommand = new ListObjectsCommand({
         Bucket: this.bucketName,
-        MaxKeys: 5,  // Limitar para as 5 últimas imagens
-        Delimiter: '/',  // Pegar apenas objetos de nível superior
+        MaxKeys: 5,
       });
-
+  
       const response = await this.s3Client.send(listCommand);
-
-      // Ordenar as imagens pela data de envio, da mais recente para a mais antiga
+  
       if (response.Contents) {
-        const sortedImages = response.Contents.sort((a, b) =>
-          (new Date(b.LastModified || '').getTime()) - (new Date(a.LastModified || '').getTime())
-        ).slice(0, 5);
-
-        // Mapear as imagens e gerar as URLs
-        this.imagensRecentes = sortedImages.map(item => ({
+        this.imagensRecentes = response.Contents.slice(0, 5).map(item => ({
           key: item.Key || '',
           url: `https://${this.bucketName}.s3.sa-east-1.amazonaws.com/${item.Key}`
         }));
@@ -74,4 +66,5 @@ export class HomeComponent {
       console.error('Erro ao carregar as últimas imagens', error);
     }
   }
+  
 }

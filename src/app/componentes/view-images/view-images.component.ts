@@ -1,6 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { S3Client, ListObjectsCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import {ChangeDetectorRef, Component } from '@angular/core';
+import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 
 @Component({
   selector: 'app-view-images',
@@ -15,17 +15,14 @@ import { S3Client, ListObjectsCommand, GetObjectCommand } from '@aws-sdk/client-
 
   <div *ngIf="imagens.length > 0" class="gallery-grid">
     <div *ngFor="let imagem of imagens" class="gallery-item">
-      <!-- Imagem -->
       <img [src]="imagem.url" alt="{{ imagem.key }}" class="gallery-image" />
 
-      <!-- Link de Visualização sobre a Imagem -->
       <a (click)="openModal(imagem.url)" class="gallery-overlay">
         <span class="overlay-text">Visualizar</span>
       </a>
 
-      <!-- Botão Ver Detalhes da Imagem -->
       <button (click)="openDetailsModal(imagem)" class="details-button">
-        Ver Detalhes da Imagem
+        <b>Ver Detalhes</b>
       </button>
     </div>
   </div>
@@ -34,7 +31,6 @@ import { S3Client, ListObjectsCommand, GetObjectCommand } from '@aws-sdk/client-
     Nenhuma imagem encontrada.
   </div>
 
-  <!-- Modal de visualização de imagem -->
   <div *ngIf="isModalOpen" class="image-modal">
     <div class="modal-content">
       <img [src]="selectedImageUrl" alt="Imagem em tela cheia" class="modal-image" />
@@ -43,11 +39,10 @@ import { S3Client, ListObjectsCommand, GetObjectCommand } from '@aws-sdk/client-
   </div>
 </div>
 
-  <!-- Modal de Detalhes da Imagem -->
   <div *ngIf="isDetailsModalOpen" class="details-modal" (click)="closeDetailsModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <button (click)="closeDetailsModal()" class="modal-close-button" aria-label="Fechar">&times;</button>
-    <h6 class="modal-title" style="font-size: 1.2em;">Detalhes da Imagem</h6>
+    <h6 class="modal-title" style="font-size: 1.1em;">Detalhes da Imagem</h6>
     <div class="modal-body">
       <p><strong>Nome:</strong> {{ selectedImage?.key }}</p>
       <p><strong>Formato:</strong> {{ selectedImage?.format }}</p> <!-- Formato da imagem -->
@@ -107,7 +102,6 @@ export class ViewImagesComponent {
     this.isModalOpen = true;
   }
 
-  // Fecha o modal
   closeModal() {
     this.isModalOpen = false;
     this.selectedImageUrl = null;
@@ -115,7 +109,7 @@ export class ViewImagesComponent {
 
   openDetailsModal(imagem: any) {
     const extension = imagem.key.split('.').pop()?.toUpperCase();
-    imagem.format = extension || 'Desconhecido';  // Definir formato automaticamente
+    imagem.format = extension || 'Desconhecido';
     this.selectedImage = imagem;
 
     console.log("selectedImage --->> ", imagem);
