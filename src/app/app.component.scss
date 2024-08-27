@@ -1,0 +1,77 @@
+// Resetar margens e paddings globais
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  // Fonte global
+  body {
+    font-family: 'Roboto', sans-serif; // Fonte estilosa
+    background-color: #f7fafc; // Cor de fundo suave para a página
+    color: #333; // Cor padrão de texto
+  }
+  
+  // App Container
+  .app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  // Navbar
+  .navbar {
+    background-color: #333;
+    padding: 1rem 0; // Remover padding excessivo
+    color: white;
+  }
+  
+  .navbar-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar-brand {
+    font-size: 1.75rem; // Aumentar o tamanho da fonte
+    font-weight: 700;   // Tornar o texto mais pesado
+    color: white;
+  }
+  
+  .navbar-menu {
+    list-style: none; // Remover marcadores
+    display: flex;
+    gap: 2rem; // Ajustar o espaçamento entre os itens
+  }
+  
+  .navbar-menu li {
+    padding: 0.5rem 0; // Espaçamento vertical nos itens
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  
+    &:hover {
+      color: #9ca3af;  // Alterar para cinza claro no hover
+    }
+  }
+  
+  // Main Content
+  .main-content {
+    flex-grow: 1;
+    padding: 2rem; // Adicionar padding ao conteúdo principal
+    background-color: #f7fafc;
+  }
+  
+  // Footer
+  .footer {
+    background-color: #333;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+  }
