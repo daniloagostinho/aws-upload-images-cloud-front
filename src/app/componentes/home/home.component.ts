@@ -15,21 +15,22 @@ import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
     NgFor
   ],
   template: `
-    <section class="max-w-7xl mx-auto py-8">
-      <h2 class="text-2xl font-bold text-center mb-6">Últimas Imagens Enviadas</h2>
-      
-      <div *ngIf="imagensRecentes.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <div *ngFor="let imagem of imagensRecentes" class="relative">
-          <img [src]="imagem.url" alt="{{ imagem.key }}" class="w-full h-64 object-cover rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer" />
-        </div>
-      </div>
+   <section class="image-section">
+  <h2 class="image-section-title">Últimas Imagens Enviadas</h2>
+  
+  <div *ngIf="imagensRecentes.length > 0" class="image-grid">
+    <div *ngFor="let imagem of imagensRecentes" class="image-item">
+      <img [src]="imagem.url" alt="{{ imagem.key }}" class="image" />
+    </div>
+  </div>
 
-      <div *ngIf="imagensRecentes.length === 0" class="text-center text-gray-600">
-        Nenhuma imagem recente encontrada.
-      </div>
-    </section>
+  <div *ngIf="imagensRecentes.length === 0" class="no-images">
+    Nenhuma imagem recente encontrada.
+  </div>
+</section>
+
   `,
-  styleUrl: './home.component.css',
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   imagensRecentes: { key: string, url: string }[] = [];
@@ -59,7 +60,7 @@ export class HomeComponent {
 
       // Ordenar as imagens pela data de envio, da mais recente para a mais antiga
       if (response.Contents) {
-        const sortedImages = response.Contents.sort((a, b) => 
+        const sortedImages = response.Contents.sort((a, b) =>
           (new Date(b.LastModified || '').getTime()) - (new Date(a.LastModified || '').getTime())
         ).slice(0, 5);
 

@@ -10,51 +10,63 @@ import { S3Client, ListObjectsCommand, GetObjectCommand } from '@aws-sdk/client-
     NgIf
   ],
   template: `
-<div class="max-w-7xl mx-auto py-8 px-4">
-  <h1 class="text-3xl font-bold text-center mb-8">Galeria de Imagens</h1>
+ <div class="gallery-container">
+  <h1 class="gallery-title">Galeria de Imagens</h1>
 
-  <div *ngIf="imagens.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-  <div *ngFor="let imagem of imagens" class="group relative">
-    <!-- Imagem -->
-    <img [src]="imagem.url" alt="{{ imagem.key }}" class="w-full h-64 object-cover rounded-lg shadow-lg transition-transform duration-300 ease-in-out transform group-hover:scale-105" />
+  <div *ngIf="imagens.length > 0" class="gallery-grid">
+    <div *ngFor="let imagem of imagens" class="gallery-item">
+      <!-- Imagem -->
+      <img [src]="imagem.url" alt="{{ imagem.key }}" class="gallery-image" />
 
-    <!-- Link de Visualização sobre a Imagem -->
-    <a (click)="openModal(imagem.url)"
-       class="absolute inset-0 flex items-center justify-center transition-all duration-300 ease-in-out opacity-0 group-hover:opacity-100">
-      <span class="bg-black bg-opacity-60 text-white text-lg font-semibold px-4 py-2 rounded-lg cursor-pointer">
-        Visualizar
-      </span>
-    </a>
+      <!-- Link de Visualização sobre a Imagem -->
+      <a (click)="openModal(imagem.url)" class="gallery-overlay">
+        <span class="overlay-text">Visualizar</span>
+      </a>
+
+      <!-- Botão Ver Detalhes da Imagem -->
+      <button (click)="openDetailsModal(imagem)" class="details-button">
+        Ver Detalhes da Imagem
+      </button>
+    </div>
   </div>
-</div>
 
-
-  <div *ngIf="imagens.length === 0" class="text-center text-gray-600">
+  <div *ngIf="imagens.length === 0" class="no-images-text">
     Nenhuma imagem encontrada.
   </div>
 
   <!-- Modal de visualização de imagem -->
-  <div *ngIf="isModalOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-    <div class="relative">
-      <img [src]="selectedImageUrl" alt="Imagem em tela cheia" class="max-w-full max-h-screen object-contain rounded-lg shadow-lg" />
-      <button (click)="closeModal()" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
+  <div *ngIf="isModalOpen" class="image-modal">
+    <div class="modal-content">
+      <img [src]="selectedImageUrl" alt="Imagem em tela cheia" class="modal-image" />
+      <button (click)="closeModal()" class="modal-close-button">&times;</button>
     </div>
   </div>
 </div>
 
+  <!-- Modal de Detalhes da Imagem -->
+  <div *ngIf="isDetailsModalOpen" class="details-modal" (click)="closeDetailsModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button (click)="closeDetailsModal()" class="modal-close-button" aria-label="Fechar">&times;</button>
+    <h6 class="modal-title" style="font-size: 1.2em;">Detalhes da Imagem</h6>
+    <div class="modal-body">
+      <p><strong>Nome:</strong> {{ selectedImage?.key }}</p>
+      <p><strong>Formato:</strong> {{ selectedImage?.format }}</p> <!-- Formato da imagem -->
+    </div>
+    <button (click)="closeDetailsModal()" class="close-modal-btn">Fechar</button>
+  </div>
+</div>
 
   `,
-  styleUrl: './view-images.component.css',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './view-images.component.scss',
 })
 export class ViewImagesComponent {
   bucketName = 'minha-aplicacao-upload-imagens';  // Nome do seu bucket
   s3Client: S3Client;
-
   imagens: { key: string, url: string }[] = [];
-
   isModalOpen: boolean = false;
   selectedImageUrl: string | null = null;
+  isDetailsModalOpen = false;
+  selectedImage: any = null;
 
   constructor(private cdr: ChangeDetectorRef) {
     // Configuração do cliente S3
@@ -99,5 +111,19 @@ export class ViewImagesComponent {
   closeModal() {
     this.isModalOpen = false;
     this.selectedImageUrl = null;
+  }
+
+  openDetailsModal(imagem: any) {
+    const extension = imagem.key.split('.').pop()?.toUpperCase();
+    imagem.format = extension || 'Desconhecido';  // Definir formato automaticamente
+    this.selectedImage = imagem;
+
+    console.log("selectedImage --->> ", imagem);
+    this.isDetailsModalOpen = true;
+  }
+
+  closeDetailsModal() {
+    this.isDetailsModalOpen = false;
+    this.selectedImage = null;
   }
 }

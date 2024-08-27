@@ -1,0 +1,88 @@
+// Upload Container
+.upload-container {
+  max-width: 1120px; // Substituindo 'max-w-7xl'
+  margin: 0 auto; // Centralizando o conteúdo
+  padding: 2rem 1rem; // Substituindo 'py-8 px-4'
+}
+
+// Título
+.upload-title {
+  font-size: 2rem; // Substituindo 'text-3xl'
+  font-weight: bold; // Substituindo 'font-bold'
+  text-align: center; // Substituindo 'text-center'
+  margin-bottom: 2rem; // Substituindo 'mb-8'
+}
+
+// Formulário
+.upload-form-wrapper {
+  background-color: white; // Substituindo 'bg-white'
+  padding: 2rem; // Substituindo 'p-8'
+  border-radius: 0.5rem; // Substituindo 'rounded-lg'
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Substituindo 'shadow-md'
+}
+
+// Inputs do Formulário
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; // Substituindo 'space-y-4'
+}
+
+.file-input {
+  width: 100%; // Substituindo 'w-full'
+  color: #4a5568; // Substituindo 'text-gray-700'
+  padding: 0.5rem 1rem; // Substituindo 'px-4 py-2'
+  border: 1px solid #d2d6dc; // Substituindo 'border-gray-300'
+  border-radius: 0.375rem; // Substituindo 'rounded-md'
+}
+
+// Botão de Upload
+.upload-button {
+  width: 100%; // Substituindo 'w-full'
+  background-color: #2563eb; // Substituindo 'bg-blue-600'
+  color: white;
+  padding: 0.5rem 0; // Substituindo 'py-2'
+  border-radius: 0.375rem; // Substituindo 'rounded-md'
+  transition: background-color 0.3s ease; // Substituindo 'transition-colors duration-300'
+  border: 0;
+  font-size: 1em;
+  cursor: pointer;
+  &:hover {
+    background-color: #1d4ed8; // Substituindo 'hover:bg-blue-500'
+  }
+}
+
+// Status de Upload
+.upload-status {
+  margin-top: 1rem; // Substituindo 'mt-4'
+  text-align: center; // Substituindo 'text-center'
+}
+
+.loading {
+  font-size: 1.125rem; // Substituindo 'text-lg'
+  font-weight: 600; // Substituindo 'font-semibold'
+  color: #2563eb; // Substituindo 'text-blue-600'
+  animation: pulse 1.5s infinite; // Substituindo 'animate-pulse'
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+}
+
+// Texto de Sucesso e Erro
+.success-text {
+  font-size: 1.125rem; // Substituindo 'text-lg'
+  font-weight: 600; // Substituindo 'font-semibold'
+  color: #16a34a; // Substituindo 'text-green-600'
+}
+
+.error-text {
+  font-size: 1.125rem; // Substituindo 'text-lg'
+  font-weight: 600; // Substituindo 'font-semibold'
+  color: #dc2626; // Substituindo 'text-red-600'
+}

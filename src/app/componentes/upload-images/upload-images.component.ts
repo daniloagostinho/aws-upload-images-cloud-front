@@ -10,32 +10,31 @@ import { S3Client, PutObjectCommand, ObjectCannedACL } from '@aws-sdk/client-s3'
     CommonModule,
   ],
   template: `
-<div class="max-w-7xl mx-auto py-8 px-4">
-  <h1 class="text-3xl font-bold text-center mb-8">Upload de Imagens</h1>
+<div class="upload-container">
+  <h1 class="upload-title">Upload de Imagens</h1>
 
-  <div class="bg-white p-8 rounded-lg shadow-md">
-    <form (submit)="onUpload($event)" class="space-y-4">
-      <input type="file" (change)="onFileSelected($event)" class="block w-full text-gray-700 px-4 py-2 border border-gray-300 rounded-md" />
+  <div class="upload-form-wrapper">
+    <form (submit)="onUpload($event)" class="upload-form">
+      <input type="file" (change)="onFileSelected($event)" class="file-input" />
       
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-500 transition-colors duration-300">Upload</button>
+      <button type="submit" class="upload-button">Fazer Upload</button>
     </form>
 
     <!-- Mostrar o status do upload -->
-    <div *ngIf="isLoading" class="mt-4 text-center">
-      <p class="text-lg font-semibold text-blue-600 animate-pulse">Carregando...</p>
+    <div *ngIf="isLoading" class="upload-status loading">
+      <p>Carregando...</p>
     </div>
 
-    <div *ngIf="uploadStatus && !isLoading" class="mt-4 text-center">
-      <p [ngClass]="{'text-green-600': uploadSuccess, 'text-red-600': !uploadSuccess}" class="text-lg font-semibold">
+    <div *ngIf="uploadStatus && !isLoading" class="upload-status">
+      <p [ngClass]="{'success-text': uploadSuccess, 'error-text': !uploadSuccess}">
         {{ uploadStatus }}
       </p>
     </div>
   </div>
 </div>
 
-
   `,
-  styleUrl: './upload-images.component.css',
+  styleUrl: './upload-images.component.scss',
 })
 export class UploadImagesComponent {
   selectedFile: File | null = null;

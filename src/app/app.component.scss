@@ -19,47 +19,50 @@
     flex-direction: column;
   }
   
-  // Navbar
   .navbar {
     background-color: #333;
-    padding: 1rem 0; // Remover padding excessivo
-    color: white;
+    padding: 1rem 0;
   }
   
   .navbar-container {
+    display: flex;
+    justify-content: space-between; /* Espaçar logo/brand e menu */
+    align-items: center;
     max-width: 1120px;
     margin: 0 auto;
+  }
+  
+  .logo-brand {
     display: flex;
-    justify-content: space-between;
     align-items: center;
   }
   
+  .logo-brand img {
+    margin-right: 1rem; /* Espaço entre logo e o texto */
+  }
+  
   .navbar-brand {
-    font-size: 1.75rem; // Aumentar o tamanho da fonte
-    font-weight: 700;   // Tornar o texto mais pesado
+    font-size: 1.5rem;
     color: white;
+    text-decoration: none;
   }
   
   .navbar-menu {
-    list-style: none; // Remover marcadores
     display: flex;
-    gap: 2rem; // Ajustar o espaçamento entre os itens
-  }
-  
-  .navbar-menu li {
-    padding: 0.5rem 0; // Espaçamento vertical nos itens
+    list-style: none;
+    gap: 2rem;
   }
   
   .navbar-link {
-    text-decoration: none;
     color: white;
-    font-weight: 500;
-    transition: color 0.3s ease;
-  
+    text-decoration: none;
+    font-weight: bold;
+    
     &:hover {
-      color: #9ca3af;  // Alterar para cinza claro no hover
+      color: #ccc;
     }
   }
+  
   
   // Main Content
   .main-content {

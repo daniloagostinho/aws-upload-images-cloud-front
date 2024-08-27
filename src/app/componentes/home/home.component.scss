@@ -1,0 +1,54 @@
+// Seção de imagens
+.image-section {
+  max-width: 1120px; // Substituindo 'max-w-7xl'
+  margin: 0 auto; // Centralizando o conteúdo
+  padding: 2rem 0; // Substituindo 'py-8'
+}
+
+.image-section-title {
+  font-size: 1.5rem; // Substituindo 'text-2xl'
+  font-weight: bold; // Substituindo 'font-bold'
+  text-align: center; // Centralizando o título
+  margin-bottom: 1.5rem; // Substituindo 'mb-6'
+}
+
+.image-grid {
+  display: grid; // Usando grid layout
+  grid-template-columns: repeat(1, 1fr); // Substituindo 'grid-cols-1'
+  gap: 1.5rem; // Substituindo 'gap-6'
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr); // Substituindo 'sm:grid-cols-2'
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr); // Substituindo 'md:grid-cols-3'
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr); // Substituindo 'lg:grid-cols-4'
+  }
+}
+
+.image-item {
+  position: relative; // Substituindo 'relative'
+}
+
+.image {
+  width: 100%; // Substituindo 'w-full'
+  height: 16rem; // Substituindo 'h-64'
+  object-fit: cover; // Substituindo 'object-cover'
+  border-radius: 0.5rem; // Substituindo 'rounded-lg'
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Substituindo 'shadow-lg'
+  transition: transform 0.3s ease-in-out; // Substituindo 'transition-transform duration-300 ease-in-out'
+  
+  &:hover {
+    transform: scale(1.05); // Substituindo 'hover:scale-105'
+    cursor: pointer; // Substituindo 'cursor-pointer'
+  }
+}
+
+.no-images {
+  text-align: center; // Substituindo 'text-center'
+  color: #718096; // Substituindo 'text-gray-600'
+}
