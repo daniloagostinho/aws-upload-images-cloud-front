@@ -40,8 +40,8 @@ export class ViewImagesComponent {
     this.s3Client = new S3Client({
       region: 'sa-east-1',  // Ex: 'sa-east-1'
       credentials: {
-        accessKeyId: 'AKIAYCO62F54H5FXS3MR',
-        secretAccessKey: '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'
+        accessKeyId: '',
+        secretAccessKey: '',
       }
     });
   }
