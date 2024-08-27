@@ -41,7 +41,7 @@ export class HomeComponent {
   async onUpload() {
     if (this.selectedFile) {
       const params = {
-        Bucket: 'minha-aplicacao-upload-imagens',  // Substitua pelo nome do bucket
+        Bucket: '',  // Substitua pelo nome do bucket
         Key: this.selectedFile.name,
         Body: this.selectedFile,
         ContentType: this.selectedFile.type,
