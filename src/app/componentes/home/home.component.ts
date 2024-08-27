@@ -1,5 +1,5 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 
@@ -14,22 +14,7 @@ import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
     NgIf,
     NgFor
   ],
-  template: `
-   <section class="image-section">
-  <h2 class="image-section-title">Últimas Imagens Enviadas</h2>
-  
-  <div *ngIf="imagensRecentes.length > 0" class="image-grid">
-    <div *ngFor="let imagem of imagensRecentes" class="image-item">
-      <img [src]="imagem.url" alt="{{ imagem.key }}" class="image" />
-    </div>
-  </div>
-
-  <div *ngIf="imagensRecentes.length === 0" class="no-images">
-    Nenhuma imagem recente encontrada.
-  </div>
-</section>
-
-  `,
+  templateUrl: 'home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {

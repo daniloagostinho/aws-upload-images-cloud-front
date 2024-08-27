@@ -9,30 +9,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
   imports: [
     CommonModule,
   ],
-  template: `
-<div class="upload-container">
-  <h1 class="upload-title">Upload de Imagens</h1>
-
-  <div class="upload-form-wrapper">
-    <form (submit)="onUpload($event)" class="upload-form">
-      <input type="file" (change)="onFileSelected($event)" class="file-input" />
-      
-      <button type="submit" class="upload-button">Fazer Upload</button>
-    </form>
-
-    <div *ngIf="isLoading" class="upload-status loading">
-      <p>Carregando...</p>
-    </div>
-
-    <div *ngIf="uploadStatus && !isLoading" class="upload-status">
-      <p [ngClass]="{'success-text': uploadSuccess, 'error-text': !uploadSuccess}">
-        {{ uploadStatus }}
-      </p>
-    </div>
-  </div>
-</div>
-
-  `,
+  templateUrl:'upload-images.component.html',
   styleUrl: './upload-images.component.scss',
 })
 export class UploadImagesComponent {

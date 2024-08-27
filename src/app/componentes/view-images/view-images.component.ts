@@ -1,5 +1,5 @@
-import { CommonModule, NgIf } from '@angular/common';
-import {ChangeDetectorRef, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {Component } from '@angular/core';
 import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 
 @Component({
@@ -7,55 +7,12 @@ import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
   standalone: true,
   imports: [
     CommonModule,
-    NgIf
   ],
-  template: `
- <div class="gallery-container">
-  <h1 class="gallery-title">Galeria de Imagens</h1>
-
-  <div *ngIf="imagens.length > 0" class="gallery-grid">
-    <div *ngFor="let imagem of imagens" class="gallery-item">
-      <img [src]="imagem.url" alt="{{ imagem.key }}" class="gallery-image" />
-
-      <a (click)="openModal(imagem.url)" class="gallery-overlay">
-        <span class="overlay-text">Visualizar</span>
-      </a>
-
-      <button (click)="openDetailsModal(imagem)" class="details-button">
-        <b>Ver Detalhes</b>
-      </button>
-    </div>
-  </div>
-
-  <div *ngIf="imagens.length === 0" class="no-images-text">
-    Nenhuma imagem encontrada.
-  </div>
-
-  <div *ngIf="isModalOpen" class="image-modal">
-    <div class="modal-content">
-      <img [src]="selectedImageUrl" alt="Imagem em tela cheia" class="modal-image" />
-      <button (click)="closeModal()" class="modal-close-button">&times;</button>
-    </div>
-  </div>
-</div>
-
-  <div *ngIf="isDetailsModalOpen" class="details-modal" (click)="closeDetailsModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <button (click)="closeDetailsModal()" class="modal-close-button" aria-label="Fechar">&times;</button>
-    <h6 class="modal-title" style="font-size: 1.1em;">Detalhes da Imagem</h6>
-    <div class="modal-body">
-      <p><strong>Nome:</strong> {{ selectedImage?.key }}</p>
-      <p><strong>Formato:</strong> {{ selectedImage?.format }}</p> <!-- Formato da imagem -->
-    </div>
-    <button (click)="closeDetailsModal()" class="close-modal-btn">Fechar</button>
-  </div>
-</div>
-
-  `,
+  templateUrl:'./view-images.component.html',
   styleUrl: './view-images.component.scss',
 })
 export class ViewImagesComponent {
-  bucketName = 'minha-aplicacao-upload-imagens';  // Nome do seu bucket
+  bucketName = 'minha-aplicacao-upload-imagens';
   s3Client: S3Client;
   imagens: { key: string, url: string }[] = [];
   isModalOpen: boolean = false;
@@ -63,10 +20,9 @@ export class ViewImagesComponent {
   isDetailsModalOpen = false;
   selectedImage: any = null;
 
-  constructor(private cdr: ChangeDetectorRef) {
-    // Configuração do cliente S3
+  constructor() {
     this.s3Client = new S3Client({
-      region: 'sa-east-1',  // Ex: 'sa-east-1'
+      region: 'sa-east-1',
       credentials: {
         accessKeyId: 'AKIAYCO62F54H5FXS3MR',
         secretAccessKey: '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'

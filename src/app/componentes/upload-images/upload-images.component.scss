@@ -1,42 +1,37 @@
-// Upload Container
 .upload-container {
-  max-width: 1120px; // Substituindo 'max-w-7xl'
-  margin: 0 auto; // Centralizando o conteúdo
-  padding: 2rem 1rem; // Substituindo 'py-8 px-4'
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
-// Título
 .upload-title {
-  font-size: 2rem; // Substituindo 'text-3xl'
-  font-weight: bold; // Substituindo 'font-bold'
-  text-align: center; // Substituindo 'text-center'
-  margin-bottom: 2rem; // Substituindo 'mb-8'
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-// Formulário
 .upload-form-wrapper {
-  background-color: white; // Substituindo 'bg-white'
-  padding: 2rem; // Substituindo 'p-8'
-  border-radius: 0.5rem; // Substituindo 'rounded-lg'
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Substituindo 'shadow-md'
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-// Inputs do Formulário
 .upload-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem; // Substituindo 'space-y-4'
+  gap: 1rem;
 }
 
 .file-input {
-  width: 100%; // Substituindo 'w-full'
-  color: #4a5568; // Substituindo 'text-gray-700'
-  padding: 0.5rem 1rem; // Substituindo 'px-4 py-2'
-  border: 1px solid #d2d6dc; // Substituindo 'border-gray-300'
-  border-radius: 0.375rem; // Substituindo 'rounded-md'
+  width: 100%;
+  color: #4a5568;
+  padding: 0.5rem 1rem;
+  border: 1px solid #d2d6dc;
+  border-radius: 0.375rem;
 }
 
-// Botão de Upload
 .upload-button {
   width: 100%; // Substituindo 'w-full'
   background-color: #2563eb; // Substituindo 'bg-blue-600'

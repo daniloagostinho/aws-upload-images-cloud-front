@@ -1,0 +1,13 @@
+<section class="image-section">
+  <h2 class="image-section-title">Últimas Imagens Enviadas</h2>
+
+  <div *ngIf="imagensRecentes.length > 0" class="image-grid">
+    <div *ngFor="let imagem of imagensRecentes" class="image-item">
+      <img [src]="imagem.url" alt="{{ imagem.key }}" class="image" />
+    </div>
+  </div>
+
+  <div *ngIf="imagensRecentes.length === 0" class="no-images">
+    Nenhuma imagem recente encontrada.
+  </div>
+</section>

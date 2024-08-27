@@ -1,0 +1,25 @@
+<div class="upload-container">
+  <h1 class="upload-title">Upload de Imagens</h1>
+
+  <div class="upload-form-wrapper">
+    <form (submit)="onUpload($event)" class="upload-form">
+      <input type="file" (change)="onFileSelected($event)" class="file-input" />
+
+      <button type="submit" class="upload-button">Fazer Upload</button>
+    </form>
+
+    @if (isLoading) {
+      <div class="upload-status loading">
+        <p>Carregando...</p>
+      </div>
+    }
+
+    @if (uploadStatus && !isLoading) {
+      <div class="upload-status">
+        <p [ngClass]="{'success-text': uploadSuccess, 'error-text': !uploadSuccess}">
+          {{ uploadStatus }}
+        </p>
+      </div>
+    }
+  </div>
+</div>
