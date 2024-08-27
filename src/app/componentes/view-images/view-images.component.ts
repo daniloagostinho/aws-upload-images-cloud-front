@@ -38,7 +38,7 @@ export class ViewImagesComponent {
   constructor(private cdr: ChangeDetectorRef) {
     // Configuração do cliente S3
     this.s3Client = new S3Client({
-      region: 'sa-east-1',  // Ex: 'sa-east-1'
+      region: '',  // Ex: 'sa-east-1'
       credentials: {
         accessKeyId: '',
         secretAccessKey: '',
