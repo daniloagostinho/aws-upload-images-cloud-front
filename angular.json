@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "upload-images-s3": {
+    "upload-images-cloud-front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/upload-images-s3",
+            "outputPath": "dist/upload-images-cloud-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "upload-images-s3:build:production"
+              "buildTarget": "upload-images-cloud-front:build:production"
             },
             "development": {
-              "buildTarget": "upload-images-s3:build:development"
+              "buildTarget": "upload-images-cloud-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "upload-images-s3:build"
+            "buildTarget": "upload-images-cloud-front:build"
           }
         },
         "test": {

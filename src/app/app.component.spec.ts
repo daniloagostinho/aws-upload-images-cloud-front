@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'upload-images-s3' title`, () => {
+  it(`should have the 'upload-images-cloud-front' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('upload-images-s3');
+    expect(app.title).toEqual('upload-images-cloud-front');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, upload-images-s3');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, upload-images-cloud-front');
   });
 });

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
-import { S3Service } from '../../services/s3.service';
+import { CloundFrontService } from '../../services/cloud-front.service';
 
 @Component({
   selector: 'app-view-images',
@@ -19,11 +19,11 @@ export class ViewImagesComponent {
   isDetailsModalOpen = false;
   selectedImage: any = null;
 
-  constructor(private s3Service: S3Service) { }
+  constructor(private CloundFrontService: CloundFrontService) { }
 
   async ngOnInit() {
     try {
-      this.imagens = await this.s3Service.listarImagens();
+      this.imagens = await this.CloundFrontService.listarImagens();
       console.log("Imagens e URLs geradas:", this.imagens);
     } catch (error) {
       console.error('Erro ao carregar as imagens:', error);

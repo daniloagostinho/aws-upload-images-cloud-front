@@ -4,8 +4,9 @@ import { S3Client, ListObjectsCommand } from '@aws-sdk/client-s3';
 @Injectable({
   providedIn: 'root'
 })
-export class S3Service {
+export class CloundFrontService {
   private bucketName = 'minha-aplicacao-upload-imagens';
+  private cloudFrontDomain = 'https://d2s9dzjvc1bucl.cloudfront.net';
 
   constructor(private s3Client: S3Client) {}
 
@@ -18,11 +19,10 @@ export class S3Service {
       const response = await this.s3Client.send(listCommand);
 
       if (response.Contents) {
-        const imagens = response.Contents.map(item => ({
+        return response.Contents.map(item => ({
           key: item.Key || '',
-          url: `https://${this.bucketName}.s3.sa-east-1.amazonaws.com/${item.Key}`
+          url: `${this.cloudFrontDomain}/${item.Key}`
         }));
-        return imagens;
       } else {
         console.log("Nenhuma imagem encontrada.");
         return [];

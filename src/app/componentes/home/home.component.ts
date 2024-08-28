@@ -1,7 +1,7 @@
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { S3Service } from '../../services/s3.service';
+import { CloundFrontService } from '../../services/cloud-front.service';
 
 
 @Component({
@@ -19,12 +19,12 @@ export class HomeComponent {
   imagensrecentes: { key: string, url: string }[] = [];
 
 
-  constructor(private s3Service: S3Service) {
+  constructor(private cloundFrontService: CloundFrontService) {
   }
 
   async ngOnInit() {
     try {
-      this.imagensrecentes = await this.s3Service.listarImagens();
+      this.imagensrecentes = await this.cloundFrontService.listarImagens();
       console.log("Imagens e URLs geradas:", this.imagensrecentes);
     } catch (error) {
       console.error('Erro ao carregar as imagens:', error);
